@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "db:schema": "psql -U aspire_user -d aspire_dev -h localhost -f docs/schema.sql",
+    "db:seed": "psql -U aspire_user -d aspire_dev -h localhost -f docs/seed.sql",
+    "db:reset": "npm run db:schema && npm run db:seed"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.5.0",

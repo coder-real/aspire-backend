@@ -3,6 +3,10 @@ import helmet from "helmet";
 import cors from "cors";
 import { env } from "./config/env";
 import { errorHandler } from "./middleware/errorHandler";
+import authRoutes from "./routes/auth.routes";
+import schoolsRoutes from "./routes/schools.routes";
+import studentsRoutes from "./routes/students.routes";
+import adminRoutes from "./routes/admin.routes";
 
 const app = express();
 
@@ -15,8 +19,17 @@ app.get("/api/v1/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// Routes will be mounted here in Phase 2
-// app.use('/api/v1/auth', authRoutes);
+// Auth routes
+app.use("/api/v1/auth", authRoutes);
+
+// Schools routes
+app.use("/api/v1/schools", schoolsRoutes);
+
+// Students routes
+app.use("/api/v1/students", studentsRoutes);
+
+// Admin routes
+app.use("/api/v1/admin", adminRoutes);
 
 app.use(errorHandler);
 
