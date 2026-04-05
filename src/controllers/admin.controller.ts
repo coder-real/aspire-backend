@@ -13,27 +13,6 @@ export async function addStudent(
     const { schoolId } = req.user!;
     const { fullName, regNumber, class: className, email, password } = req.body;
 
-    if (!fullName || !regNumber || !className || !email || !password) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          code: "VALIDATION_ERROR",
-          message:
-            "fullName, regNumber, class, email and password are all required",
-        },
-      });
-    }
-
-    if (password.length < 8) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          code: "VALIDATION_ERROR",
-          message: "Password must be at least 8 characters",
-        },
-      });
-    }
-
     const student = await createStudent(
       schoolId,
       String(fullName).trim(),
@@ -57,36 +36,6 @@ export async function uploadStudentResults(
   try {
     const { schoolId } = req.user!;
     const { studentId, term, session, results } = req.body;
-
-    if (!studentId || !term || !session || !results) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          code: "VALIDATION_ERROR",
-          message: "studentId, term, session and results are all required",
-        },
-      });
-    }
-
-    if (!Array.isArray(results) || results.length === 0) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          code: "VALIDATION_ERROR",
-          message: "results must be a non-empty array",
-        },
-      });
-    }
-
-    if (results.length > 20) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          code: "VALIDATION_ERROR",
-          message: "Cannot upload more than 20 results at once",
-        },
-      });
-    }
 
     const data = await uploadResults(
       String(studentId),

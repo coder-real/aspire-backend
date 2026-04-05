@@ -3,6 +3,7 @@ DELETE FROM students;
 DELETE FROM users;
 DELETE FROM schools;
 
+-- ─── School 1: Aspire Academy (primary/secondary school layout) ────────────────
 INSERT INTO schools (
   id, name, code, primary_color, secondary_color, layout_type, is_active
 ) VALUES (
@@ -15,24 +16,69 @@ INSERT INTO schools (
   true
 );
 
-INSERT INTO users (
-  id, school_id, email, password_hash, role, is_active
+-- ─── School 2: University of Lagos (university/semester layout) ─────────────────
+INSERT INTO schools (
+  id, name, code, primary_color, secondary_color, layout_type, is_active
 ) VALUES (
-  'b0000000-0000-0000-0000-000000000001',
-  'a0000000-0000-0000-0000-000000000001',
-  'admin@aspire.edu',
-  '$2b$10$t08x4o5VksfvT70hbRvP2e1oPqOmSbg9ur1D5V3nM/joZ/QuwHUEG',
-  'admin',
+  'a0000000-0000-0000-0000-000000000002',
+  'University of Lagos',
+  'UNILAG',
+  '#003087',
+  '#C8A84B',
+  'secondary',
   true
 );
 
+-- ─── School 3: FGGC Abuja (primary school layout) ───────────────────────────────
+INSERT INTO schools (
+  id, name, code, primary_color, secondary_color, layout_type, is_active
+) VALUES (
+  'a0000000-0000-0000-0000-000000000003',
+  'FGGC Abuja',
+  'FGGC-ABUJA',
+  '#006400',
+  '#FFD700',
+  'primary',
+  true
+);
+
+-- ─── Admin users (password: Admin1234) ─────────────────────────────────────────
+INSERT INTO users (
+  id, school_id, email, password_hash, role, is_active
+) VALUES
+  (
+    'b0000000-0000-0000-0000-000000000001',
+    'a0000000-0000-0000-0000-000000000001',
+    'admin@aspire.edu',
+    '$2b$10$sELEJ.uNRfHEhXjZanyUbuO6oj4vU7MLSvwt.oP8qYbT3hXOPCP0G',
+    'admin',
+    true
+  ),
+  (
+    'b0000000-0000-0000-0000-000000000002',
+    'a0000000-0000-0000-0000-000000000002',
+    'admin@unilag.edu.ng',
+    '$2b$10$sELEJ.uNRfHEhXjZanyUbuO6oj4vU7MLSvwt.oP8qYbT3hXOPCP0G',
+    'admin',
+    true
+  ),
+  (
+    'b0000000-0000-0000-0000-000000000003',
+    'a0000000-0000-0000-0000-000000000003',
+    'admin@fggcabuja.edu.ng',
+    '$2b$10$sELEJ.uNRfHEhXjZanyUbuO6oj4vU7MLSvwt.oP8qYbT3hXOPCP0G',
+    'admin',
+    true
+  );
+
+-- ─── Test student (ASPIRE) ───────────────────────────────────────────────────────
 INSERT INTO users (
   id, school_id, email, password_hash, role, is_active
 ) VALUES (
   'd0000000-0000-0000-0000-000000000001',
   'a0000000-0000-0000-0000-000000000001',
   'student@aspire.edu',
-  '$2b$10$t08x4o5VksfvT70hbRvP2e1oPqOmSbg9ur1D5V3nM/joZ/QuwHUEG',
+  '$2b$10$sELEJ.uNRfHEhXjZanyUbuO6oj4vU7MLSvwt.oP8qYbT3hXOPCP0G',
   'student',
   true
 );

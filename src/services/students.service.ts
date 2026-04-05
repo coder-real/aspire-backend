@@ -29,8 +29,8 @@ export interface ResultsSummary {
   highest: number;
   lowest: number;
   totalSubjects: number;
-  term: string;
-  session: string;
+  term: string | null;
+  session: string | null;
 }
 
 export async function getStudentProfile(
@@ -121,10 +121,6 @@ export async function getStudentResults(
     params,
   );
 
-  if (resultsQuery.rows.length === 0) {
-    return { results: [], summary: null };
-  }
-
   const results: StudentResult[] = resultsQuery.rows.map((row) => ({
     id: row.id,
     subject: row.subject,
@@ -137,15 +133,13 @@ export async function getStudentResults(
   }));
 
   const totals = results.map((r) => r.total);
-  const average = totals.reduce((a, b) => a + b, 0) / totals.length;
-
   const summary: ResultsSummary = {
-    average: Math.round(average * 100) / 100,
-    highest: Math.max(...totals),
-    lowest: Math.min(...totals),
-    totalSubjects: results.length,
-    term: results[0].term,
-    session: results[0].session,
+    average: totals.length ? parseFloat((totals.reduce((a,b) => a+b, 0) / totals.length).toFixed(2)) : 0,
+    highest: totals.length ? Math.max(...totals) : 0,
+    lowest: totals.length ? Math.min(...totals) : 0,
+    totalSubjects: totals.length,
+    term: term ?? null,
+    session: session ?? null,
   };
 
   return { results, summary };
